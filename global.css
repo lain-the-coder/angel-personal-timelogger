@@ -105,12 +105,6 @@
   font-family: var(--font-family-base);
 }
 
-body {
-  margin: 0;
-  background: var(--color-bg-page);
-  color: var(--color-text-primary);
-}
-
 /* ===================================
    LAYOUT
    =================================== */
@@ -172,12 +166,6 @@ body {
 .sidebar nav a:hover {
   background: var(--color-bg-sidebar-body);
   color: var(--color-text-white);
-}
-
-.content {
-  flex: 1;
-  padding: var(--content-padding);
-  min-width: 0; /* ADD THIS - allows flex item to shrink below content size */
 }
 
 /* ===================================
@@ -252,13 +240,6 @@ body {
 /* ===================================
    CARDS
    =================================== */
-
-.card {
-  background: var(--color-bg-card);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
-  margin-bottom: var(--spacing-xl);
-}
 
 .card h2 {
   margin-top: 0;
@@ -1340,4 +1321,269 @@ textarea.form-control::placeholder {
 .actions-right a:hover {
   color: var(--color-primary);
   text-decoration: underline;
+}
+
+/* Table styling - keep it simple */
+.table {
+  width: 100%;
+  max-width: 1200px;
+  margin: 12px auto 0 auto; /* Center the table */
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border-light);
+  font-size: var(--font-size-sm);
+}
+
+.table th {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 11px;
+}
+
+/* Task name column */
+.table td:nth-child(1) {
+  font-weight: var(--font-weight-medium);
+}
+
+/* Notes column */
+.table td:nth-child(2) {
+  color: var(--color-text-secondary);
+  max-width: 350px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Time and duration columns - right align */
+.table td:nth-child(3),
+.table td:nth-child(4),
+.table td:nth-child(5) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th:nth-child(3),
+.table th:nth-child(4),
+.table th:nth-child(5) {
+  text-align: right;
+}
+
+/* Hover effect */
+.table tbody tr:hover {
+  background: var(--color-bg-meta);
+  cursor: pointer;
+}
+
+/* Total row */
+.total-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 2px solid var(--color-primary-light);
+  gap: 12px;
+}
+
+.total-row strong {
+  font-size: 18px;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Body - dark sides */
+body {
+  margin: 0;
+  background: #1a1f2e;
+  color: var(--color-text-primary);
+}
+
+/* Content area - subtle light background */
+.content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 40px;
+  background: #f5f7fb; /* Light gray, not pure white */
+  min-height: calc(100vh - 80px);
+}
+
+/* Cards pop out as white islands */
+.card {
+  background: #ffffff; /* Pure white */
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+}
+
+/* Form inputs reasonable width */
+.form-control {
+  max-width: 600px;
+}
+
+#task-notes {
+  max-width: 600px;
+}
+
+/* ===================================
+   TIMELOGGER CUSTOM STYLES
+   =================================== */
+
+/* Full blue background */
+body {
+  margin: 0;
+  background: #1a1f2e;
+  padding: 0;
+}
+
+/* Content area */
+.content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 40px;
+  background: transparent;
+  min-height: 100vh;
+}
+
+/* Header */
+.app-header {
+  background: transparent;
+  padding: 0 0 24px 0;
+  margin: 0 0 24px 0;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-header h1 {
+  color: white;
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-header h1 i {
+  font-size: 32px;
+  color: #6366f1;
+}
+
+/* Cards */
+.card {
+  background: white;
+  border: none;
+  border-radius: 4px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+  margin-top: 0;
+  color: #1f2937;
+}
+
+/* Form inputs */
+.form-control {
+  max-width: 600px;
+}
+
+#task-notes {
+  max-width: 600px;
+}
+
+/* Table headers */
+.table th {
+  font-weight: var(--font-weight-semibold);
+  color: #011229;
+  background: var(--color-bg-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 11px;
+  padding: 12px 16px;
+}
+
+/* Table layout */
+.table {
+  width: 100%;
+  max-width: none;
+  margin: 12px 0 0 0;
+  border-collapse: collapse;
+}
+
+/* Table cells */
+.table td {
+  text-align: left;
+}
+
+.table td:nth-child(3),
+.table td:nth-child(4),
+.table td:nth-child(5) {
+  text-align: left;
+}
+
+.table th:nth-child(3),
+.table th:nth-child(4),
+.table th:nth-child(5) {
+  text-align: left;
+}
+
+/* Notes column wrapping */
+.table td:nth-child(2) {
+  color: var(--color-text-secondary);
+  max-width: 400px;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+/* Total row */
+.total-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 2px solid #e5e7eb;
+  gap: 8px;
+}
+
+.total-row strong {
+  font-size: 16px;
+  color: #1f2937;
+  font-weight: var(--font-weight-semibold);
+}
+
+.total-row strong:last-child {
+  color: #4f46e5;
+  font-size: 18px;
+  font-weight: var(--font-weight-bold);
+}
+
+/* Timer display */
+.timer-display-large {
+  text-align: center;
+  margin: 24px 0;
+  padding: 32px 24px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 2px solid #6366f1;
+}
+
+.timer-value {
+  font-size: 56px;
+  font-weight: 700;
+  color: #4f46e5;
+  letter-spacing: 2px;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 8px;
 }

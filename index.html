@@ -9,57 +9,8 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
     <link rel="stylesheet" href="global.css" />
-    <style>
-      /* Custom header styling */
-      .app-header {
-        background: linear-gradient(
-          135deg,
-          var(--color-bg-sidebar-body) 0%,
-          var(--color-bg-sidebar-dark) 100%
-        );
-        padding: 24px;
-        margin: -24px -24px 24px -24px;
-        border-radius: 0;
-      }
-
-      .app-header h1 {
-        color: var(--color-text-white);
-        margin: 0;
-        font-size: var(--font-size-xl);
-        font-weight: var(--font-weight-bold);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .app-header h1 i {
-        font-size: 32px;
-        color: var(--color-primary-light);
-      }
-
-      .app-header .page-subtitle {
-        color: var(--color-text-sidebar);
-        margin: 6px 0 0 44px;
-      }
-
-      .timer-display-large {
-        text-align: center;
-        margin: 24px 0;
-        padding: 24px;
-        background: var(--color-bg-meta);
-        border-radius: var(--radius-lg);
-        border: 2px solid var(--color-primary-light);
-      }
-
-      .timer-value {
-        font-size: 56px;
-        font-weight: 700;
-        color: var(--color-primary);
-        letter-spacing: 2px;
-        font-variant-numeric: tabular-nums;
-      }
-    </style>
   </head>
+
   <body>
     <div class="content">
       <!-- Colored Header -->
@@ -137,13 +88,13 @@
 
       <!-- Today's Log Card -->
       <div class="card">
-        <h2><i class="bi bi-calendar-check"></i> Today's Log</h2>
+        <h2><i class="bi bi-calendar-check"></i> This Week's Log</h2>
 
         <!-- Empty state -->
         <div id="empty-state" class="dashboard-empty-state">
           <i class="bi bi-clipboard-x" style="font-size: 48px"></i>
           <p>
-            No tasks logged yet today. Start tracking to see your work here!
+            No tasks logged yet this week. Start tracking to see your work here!
           </p>
         </div>
 
@@ -165,18 +116,9 @@
             </tbody>
           </table>
 
-          <div
-            style="
-              text-align: right;
-              margin-top: 16px;
-              padding-top: 16px;
-              border-top: 2px solid var(--color-primary-light);
-            "
-          >
-            <strong style="font-size: 20px; color: var(--color-primary)">
-              <i class="bi bi-calculator"></i> Total Today:
-              <span id="total-hours">0h 0m</span>
-            </strong>
+          <div class="total-row">
+            <strong>Total This Week:</strong>
+            <strong id="total-hours">0h 0m</strong>
           </div>
         </div>
       </div>

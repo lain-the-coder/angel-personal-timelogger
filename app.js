@@ -11,6 +11,10 @@ const timerDisplay = document.getElementById("timer-display");
 const currentTracking = document.getElementById("current-task-name");
 const timerValue = document.getElementById("timer-value");
 const startTimeRef = document.getElementById("start-time");
+const tableBody = document.getElementById("tasks-tbody");
+const emptyState = document.getElementById("empty-state");
+const tasksContainer = document.getElementById("tasks-container");
+const totalHoursElement = document.getElementById("total-hours");
 
 function StartTracking() {
   //Form validation for required field
@@ -125,7 +129,117 @@ function StopTracking() {
   //Console statements
   console.log(completedTask);
   console.log("Stop button clicked");
+
+  //Calling LoadTasks so new tasks show immediately
+  LoadTasks();
 }
 
 //Event Listener for Stop Tracking click button
 stop.addEventListener("click", StopTracking);
+
+//function to get all tasks from Localstorage for displaying in table
+function LoadTasks() {
+  //Get all task from localStorage
+  const getTasks = localStorage.getItem("tasks");
+
+  //Declare array to hold all tasks
+  let allTasks = [];
+
+  if (getTasks === null) {
+    allTasks = [];
+  } else {
+    allTasks = JSON.parse(getTasks);
+  }
+
+  //Step 1: Get today and day of week
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+
+  //Step 2: Calculate how many days to go back to Monday
+  const daysToGoBack = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+  //Step 3: Calculate Monday's Date
+  const mondayThisWeek = new Date(today); // Start with the same today moment we already captured
+  mondayThisWeek.setDate(today.getDate() - daysToGoBack); // Set the date to this week's Monday's date
+  mondayThisWeek.setHours(0, 0, 0, 0); // Feb 15, 2026 at 00:00:00, so we catch ALL tasks from Monday, even if logged at 1am
+
+  //Step 4: Filtering all tasks to only tasks from Monday 12 AM
+  const currentWeekTasks = allTasks.filter((task) => {
+    const taskDate = new Date(task.startTime);
+    return taskDate >= mondayThisWeek;
+  });
+
+  //Set it as empty during every load
+  tableBody.innerHTML = "";
+
+  currentWeekTasks.forEach((currentWeekTask) => {
+    // Create a <tr> element
+    const row = document.createElement("tr");
+
+    // Format times
+    const startFormatted = new Date(
+      currentWeekTask.startTime,
+    ).toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    const endFormatted = new Date(currentWeekTask.endTime).toLocaleTimeString(
+      "en-US",
+      {
+        hour: "2-digit",
+        minute: "2-digit",
+      },
+    );
+
+    // Format duration (seconds → "Xh Ym Zs")
+    const hours = Math.floor(currentWeekTask.duration / 3600);
+    const minutes = Math.floor((currentWeekTask.duration % 3600) / 60);
+    const seconds = currentWeekTask.duration % 60;
+    const durationFormatted = `${hours}h ${minutes}m ${seconds}s`;
+
+    // Create the row
+    row.innerHTML = `
+  <td>${currentWeekTask.taskName}</td>
+  <td>${currentWeekTask.notes || "-"}</td>
+  <td>${startFormatted}</td>
+  <td>${endFormatted}</td>
+  <td>${durationFormatted}</td>
+  <td></td>
+`;
+
+    // Append the row to the table body
+    tableBody.appendChild(row);
+  });
+
+  if (currentWeekTasks.length > 0) {
+    tasksContainer.style.display = "block";
+    emptyState.style.display = "none";
+  } else {
+    tasksContainer.style.display = "none";
+    emptyState.style.display = "block";
+  }
+
+  // Sum all durations
+  const totalSeconds = currentWeekTasks.reduce(
+    (sum, task) => sum + task.duration,
+    0,
+  );
+
+  // Convert to hours/minutes
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+  // Display
+  totalHoursElement.textContent = `${hours}h ${minutes}m`;
+
+  //Console statements
+  console.log("All tasks upto date", allTasks);
+  console.log("Number of all tasks:", allTasks.length);
+  console.log("All tasks for this week", currentWeekTasks);
+  console.log("Number of tasks for this week:", currentWeekTasks.length);
+  console.log("Monday was:", mondayThisWeek);
+}
+
+//Calling it so task loads on page refresh
+LoadTasks();
