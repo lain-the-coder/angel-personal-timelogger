@@ -211,7 +211,7 @@ function LoadTasks() {
     const hours = Math.floor(currentWeekTask.duration / 3600);
     const minutes = Math.floor((currentWeekTask.duration % 3600) / 60);
     const seconds = currentWeekTask.duration % 60;
-    const durationFormatted = `${hours}h ${minutes}m ${seconds}s`;
+    const durationFormatted = `${hours} hr ${minutes} min ${seconds} sec`;
 
     // Create the row
     row.innerHTML = `
@@ -252,7 +252,7 @@ function LoadTasks() {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
 
   // Display
-  totalHoursElement.textContent = `${hours}h ${minutes}m`;
+  totalHoursElement.textContent = `${hours} hr ${minutes} min`;
 
   //Console statements
   console.log("All tasks upto date", allTasks);

@@ -1355,7 +1355,6 @@ textarea.form-control::placeholder {
 
 /* Notes column */
 .table td:nth-child(2) {
-  color: var(--color-text-secondary);
   max-width: 350px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1539,7 +1538,6 @@ body {
 
 /* Notes column wrapping */
 .table td:nth-child(4) {
-  color: var(--color-text-secondary);
   max-width: 400px;
   word-wrap: break-word;
   white-space: normal;
@@ -1564,7 +1562,6 @@ body {
 }
 
 .total-row strong:last-child {
-  color: #4f46e5;
   font-size: 18px;
   font-weight: var(--font-weight-bold);
 }
