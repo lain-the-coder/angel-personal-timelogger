@@ -1538,7 +1538,7 @@ body {
 }
 
 /* Notes column wrapping */
-.table td:nth-child(2) {
+.table td:nth-child(4) {
   color: var(--color-text-secondary);
   max-width: 400px;
   word-wrap: break-word;
