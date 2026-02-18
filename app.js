@@ -222,7 +222,11 @@ function LoadTasks() {
   <td>${startFormatted}</td>
   <td>${endFormatted}</td>
   <td>${durationFormatted}</td>
-  <td></td>
+  <td class="table-actions">
+  <button class="btn-icon" title="Delete task">
+    <i class="bi bi-trash"></i>
+  </button>
+</td>
 `;
 
     // Append the row to the table body
