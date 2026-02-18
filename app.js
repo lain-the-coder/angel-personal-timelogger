@@ -15,17 +15,24 @@ const tableBody = document.getElementById("tasks-tbody");
 const emptyState = document.getElementById("empty-state");
 const tasksContainer = document.getElementById("tasks-container");
 const totalHoursElement = document.getElementById("total-hours");
+const clientName = document.getElementById("client-name");
+const projectName = document.getElementById("project-name");
 
 function StartTracking() {
-  //Form validation for required field
-  if (taskName.value.trim().length === 0) {
-    alert("Please enter a task name");
-    //exit early
+  //Form validation for required fields
+  if (
+    taskName.value.trim().length === 0 ||
+    clientName.value.trim().length === 0 ||
+    projectName.value.trim().length === 0
+  ) {
+    alert("Please fill in all required fields");
     return;
   }
 
   //Save field values and start time into an object
   currentTask = {
+    client: clientName.value,
+    project: projectName.value,
     task: taskName.value,
     notes: taskNotes.value,
     startTime: new Date(),
@@ -64,6 +71,10 @@ function StartTracking() {
 
     timerValue.textContent = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
   }
+
+  //Calculates elapsed = NOW - startTime = 0 seconds, updates display to "00:00:00"
+  CountTimer();
+
   //Set Interval Callback function, run function every 1000 milliseconds
   timerInterval = setInterval(CountTimer, 1000);
 
@@ -87,6 +98,8 @@ function StopTracking() {
 
   //Store final task data in an object
   completedTask = {
+    clientName: currentTask.client,
+    projectName: currentTask.project,
     taskName: currentTask.task,
     notes: currentTask.notes,
     startTime: currentTask.startTime,
@@ -120,6 +133,8 @@ function StopTracking() {
   timerForm.style.display = "block";
 
   //Clear form values
+  clientName.value = "";
+  projectName.value = "";
   taskName.value = "";
   taskNotes.value = "";
 
@@ -200,6 +215,8 @@ function LoadTasks() {
 
     // Create the row
     row.innerHTML = `
+  <td>${currentWeekTask.clientName}</td>
+  <td>${currentWeekTask.projectName}</td>
   <td>${currentWeekTask.taskName}</td>
   <td>${currentWeekTask.notes || "-"}</td>
   <td>${startFormatted}</td>

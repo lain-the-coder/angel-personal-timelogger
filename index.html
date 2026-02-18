@@ -28,27 +28,52 @@
         <!-- Form (shown when NOT tracking) -->
         <div id="timer-form">
           <div class="form-group">
+            <label for="client-name">
+              <i class="bi bi-building"></i> Client Name *
+            </label>
+            <input
+              type="text"
+              id="client-name"
+              class="form-control"
+              placeholder="Which client?"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="project-name">
+              <i class="bi bi-folder"></i> Project Name *
+            </label>
+            <input
+              type="text"
+              id="project-name"
+              class="form-control"
+              placeholder="Which project?"
+              required
+            />
+          </div>
+          <div class="form-group">
             <label for="task-name"
-              ><i class="bi bi-pencil-square"></i> Task Name</label
+              ><i class="bi bi-pencil-square"></i> Task Name *</label
             >
             <input
               type="text"
               id="task-name"
               class="form-control"
-              placeholder="e.g., WASL API Testing"
+              placeholder="What are you working on?"
               required
             />
           </div>
 
           <div class="form-group">
             <label for="task-notes"
-              ><i class="bi bi-chat-left-text"></i> Notes (optional)</label
+              ><i class="bi bi-chat-left-text"></i> Notes</label
             >
             <textarea
               id="task-notes"
               class="form-control"
               rows="3"
-              placeholder="Add any details about what you're working on..."
+              placeholder="Add details or context..."
             ></textarea>
           </div>
 
@@ -103,6 +128,8 @@
           <table class="table">
             <thead>
               <tr>
+                <th><i class="bi bi-building"></i> Client</th>
+                <th><i class="bi bi-folder"></i> Project</th>
                 <th><i class="bi bi-list-task"></i> Task</th>
                 <th><i class="bi bi-chat-left-dots"></i> Notes</th>
                 <th><i class="bi bi-clock-history"></i> Start</th>
