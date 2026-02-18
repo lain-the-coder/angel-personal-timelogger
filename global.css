@@ -1585,4 +1585,8 @@ body {
   margin-bottom: 8px;
 }
 
+.table .table-actions {
+  text-align: center;
+}
+
 /* Finish */
