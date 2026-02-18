@@ -265,7 +265,9 @@ function LoadTasks() {
 //Calling it so task loads on page refresh
 LoadTasks();
 
+//Delete Task function
 function deleteTask(index) {
+  //Get tasks from local storage
   const getTasks = localStorage.getItem("tasks");
 
   //Declare array to hold all tasks
@@ -277,6 +279,7 @@ function deleteTask(index) {
     allTasks = JSON.parse(getTasks);
   }
 
+  //Remove per index
   allTasks.splice(index, 1);
 
   //Stringify the updated array  back into a JSON string
@@ -285,5 +288,6 @@ function deleteTask(index) {
   //Save the updated string to localstorage
   localStorage.setItem("tasks", updatedAllTasksString);
 
+  //Re-render table
   LoadTasks();
 }
