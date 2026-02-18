@@ -187,7 +187,7 @@ function LoadTasks() {
   //Set it as empty during every load
   tableBody.innerHTML = "";
 
-  currentWeekTasks.forEach((currentWeekTask) => {
+  currentWeekTasks.forEach((currentWeekTask, index) => {
     // Create a <tr> element
     const row = document.createElement("tr");
 
@@ -223,7 +223,7 @@ function LoadTasks() {
   <td>${endFormatted}</td>
   <td>${durationFormatted}</td>
   <td class="table-actions">
-  <button class="btn-icon" title="Delete task">
+  <button class="btn-icon" title="Delete task" onclick="deleteTask(${index})">
     <i class="bi bi-trash"></i>
   </button>
 </td>
@@ -264,3 +264,26 @@ function LoadTasks() {
 
 //Calling it so task loads on page refresh
 LoadTasks();
+
+function deleteTask(index) {
+  const getTasks = localStorage.getItem("tasks");
+
+  //Declare array to hold all tasks
+  let allTasks = [];
+
+  if (getTasks === null) {
+    allTasks = [];
+  } else {
+    allTasks = JSON.parse(getTasks);
+  }
+
+  allTasks.splice(index, 1);
+
+  //Stringify the updated array  back into a JSON string
+  const updatedAllTasksString = JSON.stringify(allTasks);
+
+  //Save the updated string to localstorage
+  localStorage.setItem("tasks", updatedAllTasksString);
+
+  LoadTasks();
+}
