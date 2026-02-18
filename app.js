@@ -96,6 +96,14 @@ function StopTracking() {
     (endTime.getTime() - currentTask.startTime.getTime()) / 1000,
   );
 
+  //Don't save tasks with 0 second duration
+  if (durationInSeconds === 0) {
+    currentTask = null;
+    timerDisplay.style.display = "none";
+    timerForm.style.display = "block";
+    return;
+  }
+
   //Store final task data in an object
   completedTask = {
     clientName: currentTask.client,
@@ -267,6 +275,8 @@ LoadTasks();
 
 //Delete Task function
 function deleteTask(index) {
+  if (!confirm("Are you sure you want to delete this task?")) return;
+
   //Get tasks from local storage
   const getTasks = localStorage.getItem("tasks");
 
@@ -291,3 +301,10 @@ function deleteTask(index) {
   //Re-render table
   LoadTasks();
 }
+
+//Warn user if they try to refresh while timer is running
+window.addEventListener("beforeunload", function (e) {
+  if (currentTask !== null) {
+    e.preventDefault();
+  }
+});
