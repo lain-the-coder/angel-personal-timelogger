@@ -14,10 +14,12 @@ I wanted a simple way to track billable hours across different clients and proje
 
 - Track time spent on tasks across different clients and projects
 - Live timer that counts up in real time while you work
+- Pause and resume the timer mid-task — only actual worked time gets saved
 - Logs are saved locally in your browser — no backend, no accounts, no setup
 - Automatically filters to show only the current work week
 - Calculates total hours logged for the week
-- Delete tasks you no longer need
+- Delete tasks with a confirmation prompt
+- Warns you before leaving the page if a timer is still running
 
 ---
 
@@ -32,12 +34,14 @@ This project touched a surprising number of real JavaScript and web development 
 - `Date` objects, timestamps, and time arithmetic
 - `setInterval` and `clearInterval` for the live timer
 - Timestamp-based timing (immune to interval drift)
+- Accumulated pause duration across multiple pause/resume cycles
 - Array methods — `filter`, `forEach`, `findIndex`, `splice`, `reduce`
 - DOM manipulation — `createElement`, `innerHTML`, `appendChild`
 - Template literals
 - Form validation
 - Event listeners
 - `beforeunload` for protecting unsaved state
+- Function scope and why moving a function to top level matters
 
 **CSS**
 
@@ -49,9 +53,10 @@ This project touched a surprising number of real JavaScript and web development 
 **General engineering thinking**
 
 - Data modeling (how to structure a task object)
-- Edge case handling (0 second tasks, accidental deletes, mid-timer refresh)
+- Edge case handling (0 second tasks, accidental deletes, mid-timer refresh, stop while paused)
 - Separating concerns between rendering, data, and logic
 - Working week date logic (calculating Monday 00:00 as the filter boundary)
+- UX decisions — button colors and labels that communicate intent clearly
 
 ---
 

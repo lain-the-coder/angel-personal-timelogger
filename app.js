@@ -1,9 +1,12 @@
 //Declared variables
 let currentTask = null;
+let pausedDuration = 0;
+let isPaused = false;
 let timerInterval = null;
 let completedTask = null;
 const start = document.getElementById("start-btn");
 const stop = document.getElementById("stop-btn");
+const pause = document.getElementById("pause-btn");
 const taskName = document.getElementById("task-name");
 const taskNotes = document.getElementById("task-notes");
 const timerForm = document.getElementById("timer-form");
@@ -17,6 +20,29 @@ const tasksContainer = document.getElementById("tasks-container");
 const totalHoursElement = document.getElementById("total-hours");
 const clientName = document.getElementById("client-name");
 const projectName = document.getElementById("project-name");
+
+//Start Interval
+function CountTimer() {
+  //TimeStamp approach as opposed to counter-based approach; accurate based on actual clock time, immune to interval drift, and can survive page refresh; Calculate: now - startTime
+  const currentTime = new Date();
+  const milliseconds = currentTime.getTime();
+
+  //Time elapsed updated to accomodate for paused duration; so start time gets updated every time to the most recent resume time and paused duration is accumulated and added at the end
+  const timeElapsed =
+    (milliseconds - currentTask.startTime.getTime()) / 1000 + pausedDuration;
+
+  //Convert to HH:MM:SS format using mathematical operations
+  const hours = Math.floor(timeElapsed / 3600);
+  const minutes = Math.floor((timeElapsed % 3600) / 60);
+  const seconds = Math.floor(timeElapsed % 60);
+
+  // Use String.padStart() to ensure two-digit formatting
+  const formattedHours = String(hours).padStart(2, "0");
+  const formattedMinutes = String(minutes).padStart(2, "0");
+  const formattedSeconds = String(seconds).padStart(2, "0");
+
+  timerValue.textContent = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+}
 
 function StartTracking() {
   //Form validation for required fields
@@ -40,6 +66,7 @@ function StartTracking() {
 
   //To display the current tracking field on UI
   currentTracking.textContent = currentTask.task;
+  pause.innerHTML = '<i class="bi bi-pause-fill"></i> Pause';
 
   //To display the start time of tracking on UI
   startTimeRef.textContent = currentTask.startTime.toLocaleTimeString("en-US", {
@@ -51,26 +78,6 @@ function StartTracking() {
   //block switch to timer upon click of Start Tracking button
   timerDisplay.style.display = "block";
   timerForm.style.display = "none";
-
-  //Start Interval
-  function CountTimer() {
-    //TimeStamp approach as opposed to counter-based approach; accurate based on actual clock time, immune to interval drift, and can survive page refresh; Calculate: now - startTime
-    const currentTime = new Date();
-    const milliseconds = currentTime.getTime();
-    const timeElapsed = (milliseconds - currentTask.startTime.getTime()) / 1000;
-
-    //Convert to HH:MM:SS format using mathematical operations
-    const hours = Math.floor(timeElapsed / 3600);
-    const minutes = Math.floor((timeElapsed % 3600) / 60);
-    const seconds = Math.floor(timeElapsed % 60);
-
-    // Use String.padStart() to ensure two-digit formatting
-    const formattedHours = String(hours).padStart(2, "0");
-    const formattedMinutes = String(minutes).padStart(2, "0");
-    const formattedSeconds = String(seconds).padStart(2, "0");
-
-    timerValue.textContent = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-  }
 
   //Calculates elapsed = NOW - startTime = 0 seconds, updates display to "00:00:00"
   CountTimer();
@@ -92,9 +99,12 @@ function StopTracking() {
 
   //Capture endtime and duration in seconds along with round off
   const endTime = new Date();
-  const durationInSeconds = Math.floor(
-    (endTime.getTime() - currentTask.startTime.getTime()) / 1000,
-  );
+  const durationInSeconds = isPaused
+    ? Math.floor(pausedDuration)
+    : Math.floor(
+        (endTime.getTime() - currentTask.startTime.getTime()) / 1000 +
+          pausedDuration,
+      );
 
   //Don't save tasks with 0 second duration
   if (durationInSeconds === 0) {
@@ -146,8 +156,10 @@ function StopTracking() {
   taskName.value = "";
   taskNotes.value = "";
 
-  //Reset current task to null
+  //Reset current task, paused duration and isPaused to default values
   currentTask = null;
+  pausedDuration = 0;
+  isPaused = false;
 
   //Console statements
   console.log(completedTask);
@@ -156,6 +168,26 @@ function StopTracking() {
   //Calling LoadTasks so new tasks show immediately
   LoadTasks();
 }
+
+function PauseTracking() {
+  if (!isPaused) {
+    //Pause the timer
+    CountTimer();
+    clearInterval(timerInterval);
+    pausedDuration +=
+      (new Date().getTime() - currentTask.startTime.getTime()) / 1000;
+    isPaused = true;
+    pause.innerHTML = '<i class="bi bi-play-fill"></i> Resume';
+  } else {
+    //Resume the timer
+    currentTask.startTime = new Date();
+    isPaused = false;
+    pause.innerHTML = '<i class="bi bi-pause-fill"></i> Pause';
+    timerInterval = setInterval(CountTimer, 1000);
+  }
+}
+
+pause.addEventListener("click", PauseTracking);
 
 //Event Listener for Stop Tracking click button
 stop.addEventListener("click", StopTracking);
